@@ -1,0 +1,65 @@
+unit UMain;
+
+interface
+
+uses Windows, Classes, Graphics, Forms, Controls, Menus,
+  Dialogs, StdCtrls, Buttons, ExtCtrls, ComCtrls, ImgList, StdActns,
+  ActnList, ToolWin,UCashCode, Spin, Select_Operator;
+
+type
+  TFMain = class(TForm)
+    Button1: TButton;
+    SpinEdit1: TSpinEdit;
+    procedure Button1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+
+  private
+    CashCodeBillValidatorCCNET:TCashCodeBillValidatorCCNET;
+    procedure EnabledControls(val: boolean);
+  public
+    FSum:Word;
+  end;
+
+var
+  FMain: TFMain;
+
+implementation
+
+{$R *.dfm}
+
+uses SysUtils;
+
+procedure TFMain.Button1Click(Sender: TObject);
+begin
+  CashCodeBillValidatorCCNET.NamberComPort:=SpinEdit1.Value; // Номер порта
+  if CashCodeBillValidatorCCNET.OpenComPort then
+  begin
+  SelectOperator.Show;
+  FMain.Hide;
+  end;
+
+  EnabledControls(CashCodeBillValidatorCCNET.ComConnected);
+end;
+
+
+
+
+procedure TFMain.EnabledControls(val: boolean);
+begin
+  Button1.Enabled:= not val;
+  SpinEdit1.Enabled:= not val;
+
+end;
+
+procedure TFMain.FormCreate(Sender: TObject);
+begin
+  CashCodeBillValidatorCCNET:=TCashCodeBillValidatorCCNET.Create;
+
+  //  Установим события
+
+  EnabledControls(false);
+end;
+
+
+
+end.

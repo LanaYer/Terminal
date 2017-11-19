@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2010.12.04 17:35:23.781.PAS,C:\Documents and Settings\admin\Рабочий стол\CCode\ABOUT.PAS=</Transaction>
+    <Transaction>2010.12.04 17:35:23.781.dfm,C:\Documents and Settings\admin\Рабочий стол\CCode\ABOUT.dfm=</Transaction>
+    <Transaction>2010.12.04 17:35:55.375.dproj,C:\Documents and Settings\admin\Рабочий стол\CCode\SDIAPP.dproj=C:\Documents and Settings\admin\Рабочий стол\CCode\CCodeDemo.dproj</Transaction>
+    <Transaction>2010.12.04 17:36:15.859.PAS,C:\Documents and Settings\admin\Рабочий стол\CCode\SDIMAIN.PAS=C:\Documents and Settings\admin\Рабочий стол\CCode\FMain.PAS</Transaction>
+    <Transaction>2010.12.04 17:36:15.859.dfm,C:\Documents and Settings\admin\Рабочий стол\CCode\SDIMAIN.dfm=C:\Documents and Settings\admin\Рабочий стол\CCode\FMain.dfm</Transaction>
+    <Transaction>2010.12.04 17:36:32.062.pas,C:\Documents and Settings\admin\Рабочий стол\CCode\FMain.pas=C:\Documents and Settings\admin\Рабочий стол\CCode\UMain.pas</Transaction>
+    <Transaction>2010.12.04 17:36:32.062.dfm,C:\Documents and Settings\admin\Рабочий стол\CCode\FMain.dfm=C:\Documents and Settings\admin\Рабочий стол\CCode\UMain.dfm</Transaction>
+    <Transaction>2010.12.04 17:37:39.453.pas,C:\Documents and Settings\admin\Рабочий стол\CCode\Unit1.pas=C:\Documents and Settings\admin\Рабочий стол\CCode\UCashCode.pas</Transaction>
+    <Transaction>2015.09.16 00:30:08.002.pas,C:\Users\Dingo\Desktop\Terminal\Unit1.pas=C:\Users\Dingo\Desktop\Terminal\SelectOperator.pas</Transaction>
+    <Transaction>2015.09.16 00:30:08.002.dfm,C:\Users\Dingo\Desktop\Terminal\Unit1.dfm=C:\Users\Dingo\Desktop\Terminal\SelectOperator.dfm</Transaction>
+    <Transaction>2015.09.16 00:31:00.509.pas,C:\Users\Dingo\Desktop\Terminal\SelectOperator.pas=C:\Users\Dingo\Desktop\Terminal\Select_Operator.pas</Transaction>
+    <Transaction>2015.09.16 00:31:00.509.dfm,C:\Users\Dingo\Desktop\Terminal\SelectOperator.dfm=C:\Users\Dingo\Desktop\Terminal\Select_Operator.dfm</Transaction>
+    <Transaction>2015.09.30 01:38:17.350.pas,C:\Users\Onix\Desktop\Сегодняшнее 29,09\UMain.pas=</Transaction>
+    <Transaction>2015.09.30 01:38:17.350.dfm,C:\Users\Onix\Desktop\Сегодняшнее 29,09\UMain.dfm=</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="Select_Operator.pas"/>
+    <File Path="Select_Operator.dfm"/>
+    <File Path="UCashCode.pas"/>
+    <File Path="Unit1.pas"/>
+    <File Path="Unit1.dfm"/>
+    <File Path="Unit2.pas"/>
+    <File Path="Unit2.dfm"/>
+    <File Path="Unit3.pas"/>
+    <File Path="Unit3.dfm"/>
+    <File Path="Unit4.pas"/>
+    <File Path="Unit4.dfm"/>
+    <File Path="Unit5.pas"/>
+    <File Path="Unit5.dfm"/>
+    <File Path="Unit6.pas"/>
+    <File Path="Unit6.dfm"/>
+    <File Path="Unit7.pas"/>
+    <File Path="Unit7.dfm"/>
+  </ProjectSortOrder>
+</BorlandProject>

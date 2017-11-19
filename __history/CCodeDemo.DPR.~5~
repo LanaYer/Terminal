@@ -1,0 +1,15 @@
+program CCodeDemo;
+
+uses
+  Forms,
+  UMain in 'UMain.pas' {FMain},
+  UCashCode in 'UCashCode.pas';
+
+{$R *.RES}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TFMain, FMain);
+  Application.Run;
+end.
+ 

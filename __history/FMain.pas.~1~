@@ -1,0 +1,32 @@
+unit SDIMAIN;
+
+interface
+
+uses Windows, Classes, Graphics, Forms, Controls, Menus,
+  Dialogs, StdCtrls, Buttons, ExtCtrls, ComCtrls, ImgList, StdActns,
+  ActnList, ToolWin;
+
+type
+  TSDIAppForm = class(TForm)
+    procedure FileNew1Execute(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  SDIAppForm: TSDIAppForm;
+
+implementation
+
+uses about;
+
+{$R *.dfm}
+
+procedure TSDIAppForm.FileNew1Execute(Sender: TObject);
+begin
+  { Do nothing }
+end;
+
+end.

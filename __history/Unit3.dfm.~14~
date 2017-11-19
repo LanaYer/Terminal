@@ -1,0 +1,362 @@
+object Form3: TForm3
+  Left = 0
+  Top = 0
+  Caption = 'Form3'
+  ClientHeight = 433
+  ClientWidth = 310
+  Color = clWhite
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 8
+    Top = 88
+    Width = 177
+    Height = 17
+    Caption = #1053#1072#1080#1084#1077#1085#1086#1074#1072#1085#1080#1077' '#1086#1087#1077#1088#1072#1090#1086#1088#1072':'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 8
+    Top = 168
+    Width = 87
+    Height = 17
+    Caption = #1053#1086#1084#1077#1088' '#1089#1095#1077#1090#1072':'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label5: TLabel
+    Left = 8
+    Top = 216
+    Width = 46
+    Height = 19
+    Caption = #1057#1091#1084#1084#1072
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label7: TLabel
+    Left = 8
+    Top = 51
+    Width = 95
+    Height = 17
+    Caption = #1050#1086#1076' '#1086#1087#1077#1088#1072#1094#1080#1080':'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label8: TLabel
+    Left = 5
+    Top = 328
+    Width = 37
+    Height = 17
+    Caption = #1044#1072#1090#1072':'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label9: TLabel
+    Left = 159
+    Top = 328
+    Width = 44
+    Height = 17
+    Caption = #1042#1088#1077#1084#1103':'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object DBText1: TDBText
+    Left = 183
+    Top = 51
+    Width = 65
+    Height = 17
+    DataField = 'ID'
+    DataSource = DataSource1
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object DBText2: TDBText
+    Left = 131
+    Top = 51
+    Width = 17
+    Height = 17
+    DataField = 'TERMINAL_ID'
+    DataSource = DataSource1
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object DBText3: TDBText
+    Left = 8
+    Top = 119
+    Width = 367
+    Height = 17
+    DataField = 'OPERATOR_NAME'
+    DataSource = DataSource1
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object DBText4: TDBText
+    Left = 138
+    Top = 168
+    Width = 65
+    Height = 17
+    DataField = 'BILL_NAME'
+    DataSource = DataSource1
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object DBText5: TDBText
+    Left = 138
+    Top = 216
+    Width = 65
+    Height = 17
+    DataField = 'SUMMA'
+    DataSource = DataSource1
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object DBText6: TDBText
+    Left = 48
+    Top = 328
+    Width = 83
+    Height = 17
+    DataField = 'DATE1'
+    DataSource = DataSource1
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object DBText7: TDBText
+    Left = 217
+    Top = 328
+    Width = 65
+    Height = 17
+    DataField = 'TIME1'
+    DataSource = DataSource1
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object DBText8: TDBText
+    Left = 278
+    Top = 360
+    Width = 65
+    Height = 17
+    DataField = 'TERMINAL_ID'
+    DataSource = DataSource1
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 115
+    Top = 0
+    Width = 88
+    Height = 17
+    Caption = #1060#1051#1055' '#1054#1088#1076#1077#1083#1086#1074
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label12: TLabel
+    Left = 8
+    Top = 257
+    Width = 117
+    Height = 17
+    Caption = #1040#1076#1088#1077#1089' '#1090#1077#1088#1084#1080#1085#1072#1083#1072':'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 12
+    Top = 288
+    Width = 364
+    Height = 17
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object IBDatabase1: TIBDatabase
+    Connected = True
+    DatabaseName = 'DB1.FDB'
+    Params.Strings = (
+      'user_name=sysdba'
+      'password=masterkey')
+    LoginPrompt = False
+    Top = 392
+  end
+  object IBTable1: TIBTable
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    Active = True
+    FieldDefs = <
+      item
+        Name = 'ID'
+        Attributes = [faRequired]
+        DataType = ftInteger
+      end
+      item
+        Name = 'TERMINAL_ID'
+        Attributes = [faRequired]
+        DataType = ftInteger
+      end
+      item
+        Name = 'OPERATOR_ID'
+        Attributes = [faRequired]
+        DataType = ftInteger
+      end
+      item
+        Name = 'OPERATOR_NAME'
+        Attributes = [faRequired]
+        DataType = ftWideString
+        Size = 100
+      end
+      item
+        Name = 'BILL_NAME'
+        Attributes = [faRequired]
+        DataType = ftWideString
+        Size = 256
+      end
+      item
+        Name = 'SUMMA'
+        Attributes = [faRequired]
+        DataType = ftInteger
+      end
+      item
+        Name = 'DATE1'
+        Attributes = [faRequired]
+        DataType = ftDate
+      end
+      item
+        Name = 'TIME1'
+        Attributes = [faRequired]
+        DataType = ftTime
+      end
+      item
+        Name = 'SENDED'
+        DataType = ftInteger
+      end>
+    IndexDefs = <
+      item
+        Name = 'PK_MAIN'
+        Fields = 'ID'
+        Options = [ixUnique]
+      end>
+    StoreDefs = True
+    TableName = 'MAIN'
+    Left = 104
+    Top = 392
+  end
+  object DataSource1: TDataSource
+    DataSet = IBTable1
+    Left = 64
+    Top = 392
+  end
+  object IBTransaction1: TIBTransaction
+    Active = True
+    DefaultDatabase = IBDatabase1
+    Params.Strings = (
+      'read_committed'
+      'rec_version'
+      'nowait')
+    Left = 32
+    Top = 392
+  end
+  object IBQuery1: TIBQuery
+    Database = IBDatabase1
+    Transaction = IBTransaction2
+    DataSource = DataSource1
+    SQL.Strings = (
+      '')
+    Left = 168
+    Top = 392
+  end
+  object IBTransaction2: TIBTransaction
+    DefaultDatabase = IBDatabase1
+    Params.Strings = (
+      'read_committed'
+      'rec_version'
+      'nowait')
+    Left = 136
+    Top = 392
+  end
+  object IBQuery2: TIBQuery
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    Active = True
+    SQL.Strings = (
+      'select * from main where sended = '#39'0'#39)
+    Left = 200
+    Top = 392
+  end
+  object DataSource2: TDataSource
+    DataSet = IBQuery2
+    Left = 240
+    Top = 392
+  end
+end

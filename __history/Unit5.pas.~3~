@@ -1,0 +1,39 @@
+unit Unit5;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Buttons;
+
+type
+  TForm5 = class(TForm)
+    SpeedButton1: TSpeedButton;
+    Label1: TLabel;
+    Label2: TLabel;
+    procedure SpeedButton1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form5: TForm5;
+
+implementation
+
+uses Select_Operator, Unit1, Unit4;
+
+{$R *.dfm}
+
+procedure TForm5.SpeedButton1Click(Sender: TObject);
+begin
+
+SelectOperator.Show();
+Form5.Hide();
+Form1.Label1.Caption := '0';
+Form4.Label5.Caption := ' ';
+end;
+
+end.

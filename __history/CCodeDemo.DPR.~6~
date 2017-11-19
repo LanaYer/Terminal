@@ -1,0 +1,21 @@
+program CCodeDemo;
+
+uses
+  Forms,
+  UMain in 'UMain.pas' {FMain},
+  UCashCode in 'UCashCode.pas',
+  Select_Operator in 'Select_Operator.pas' {SelectOperator},
+  Unit1 in 'Unit1.pas' {Form1},
+  Unit2 in 'Unit2.pas' {Form2};
+
+{$R *.RES}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TFMain, FMain);
+  Application.CreateForm(TSelectOperator, SelectOperator);
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TForm2, Form2);
+  Application.Run;
+end.
+ 

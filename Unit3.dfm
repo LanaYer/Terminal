@@ -1,0 +1,300 @@
+object Form3: TForm3
+  Left = 0
+  Top = 0
+  Caption = 'Form3'
+  ClientHeight = 314
+  ClientWidth = 267
+  Color = clWhite
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 0
+    Top = 72
+    Width = 171
+    Height = 17
+    Caption = #1053#1072#1080#1084#1077#1085#1086#1074#1072#1085#1080#1077' '#1086#1087#1077#1088#1072#1090#1086#1088#1072':'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 0
+    Top = 134
+    Width = 87
+    Height = 17
+    Caption = #1053#1086#1084#1077#1088' '#1089#1095#1077#1090#1072':'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label5: TLabel
+    Left = 8
+    Top = 184
+    Width = 46
+    Height = 19
+    Caption = #1057#1091#1084#1084#1072
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label8: TLabel
+    Left = 0
+    Top = 256
+    Width = 37
+    Height = 17
+    Caption = #1044#1072#1090#1072':'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label9: TLabel
+    Left = 132
+    Top = 256
+    Width = 44
+    Height = 17
+    Caption = #1042#1088#1077#1084#1103':'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label12: TLabel
+    Left = 0
+    Top = 217
+    Width = 117
+    Height = 17
+    Caption = #1040#1076#1088#1077#1089' '#1090#1077#1088#1084#1080#1085#1072#1083#1072':'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 0
+    Top = 233
+    Width = 21
+    Height = 17
+    Caption = 'Adr'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label6: TLabel
+    Left = 25
+    Top = 28
+    Width = 206
+    Height = 13
+    Caption = #1055#1088#1080#1077#1084' '#1087#1083#1072#1090#1077#1078#1077#1081' '#1087#1088#1086#1080#1079#1074#1086#1076#1080#1090#1089#1103' '#1074' '#1088#1091#1073#1083#1103#1093
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 8
+    Top = 95
+    Width = 46
+    Height = 19
+    Caption = 'Label2'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label7: TLabel
+    Left = 112
+    Top = 132
+    Width = 46
+    Height = 19
+    Caption = 'Label7'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label10: TLabel
+    Left = 112
+    Top = 184
+    Width = 55
+    Height = 19
+    Caption = 'Label10'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label11: TLabel
+    Left = 43
+    Top = 255
+    Width = 49
+    Height = 18
+    Caption = 'Label11'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label13: TLabel
+    Left = 182
+    Top = 255
+    Width = 49
+    Height = 18
+    Caption = 'Label13'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label14: TLabel
+    Left = 59
+    Top = 8
+    Width = 135
+    Height = 13
+    Caption = #1058#1077#1088#1084#1080#1085#1072#1083' '#1073#1099#1089#1090#1088#1086#1081' '#1086#1087#1083#1072#1090#1099
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object IBDatabase1: TIBDatabase
+    DatabaseName = 'DB1.FDB'
+    Params.Strings = (
+      'user_name=sysdba'
+      'password=masterkey')
+    LoginPrompt = False
+    Top = 352
+  end
+  object IBTable1: TIBTable
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    FieldDefs = <
+      item
+        Name = 'ID'
+        Attributes = [faRequired]
+        DataType = ftInteger
+      end
+      item
+        Name = 'TERMINAL_ID'
+        Attributes = [faRequired]
+        DataType = ftInteger
+      end
+      item
+        Name = 'OPERATOR_ID'
+        Attributes = [faRequired]
+        DataType = ftInteger
+      end
+      item
+        Name = 'OPERATOR_NAME'
+        Attributes = [faRequired]
+        DataType = ftWideString
+        Size = 100
+      end
+      item
+        Name = 'BILL_NAME'
+        Attributes = [faRequired]
+        DataType = ftWideString
+        Size = 256
+      end
+      item
+        Name = 'SUMMA'
+        Attributes = [faRequired]
+        DataType = ftInteger
+      end
+      item
+        Name = 'DATE1'
+        Attributes = [faRequired]
+        DataType = ftDate
+      end
+      item
+        Name = 'TIME1'
+        Attributes = [faRequired]
+        DataType = ftTime
+      end
+      item
+        Name = 'SENDED'
+        DataType = ftInteger
+      end>
+    IndexDefs = <
+      item
+        Name = 'PK_MAIN'
+        Fields = 'ID'
+        Options = [ixUnique]
+      end>
+    StoreDefs = True
+    TableName = 'MAIN'
+    Left = 104
+    Top = 352
+  end
+  object DataSource1: TDataSource
+    DataSet = IBTable1
+    Left = 64
+    Top = 352
+  end
+  object IBTransaction1: TIBTransaction
+    DefaultDatabase = IBDatabase1
+    Params.Strings = (
+      'read_committed'
+      'rec_version'
+      'nowait')
+    Left = 32
+    Top = 352
+  end
+  object IBQuery1: TIBQuery
+    Database = IBDatabase1
+    Transaction = IBTransaction2
+    DataSource = DataSource1
+    SQL.Strings = (
+      '')
+    Left = 168
+    Top = 352
+  end
+  object IBTransaction2: TIBTransaction
+    DefaultDatabase = IBDatabase1
+    Params.Strings = (
+      'read_committed'
+      'rec_version'
+      'nowait')
+    Left = 136
+    Top = 352
+  end
+end

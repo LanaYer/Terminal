@@ -1,0 +1,109 @@
+unit Unit6;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, GestureMgr, Buttons, StdCtrls;
+
+type
+  TForm6 = class(TForm)
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    SpeedButton1: TSpeedButton;
+    Label1: TLabel;
+    Label2: TLabel;
+    Button1: TButton;
+    procedure FormGesture(Sender: TObject; const EventInfo: TGestureEventInfo;
+      var Handled: Boolean);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form6: TForm6;
+
+implementation
+
+{$R *.dfm}
+uses Unit1, Unit5, Unit3, Unit4, Unit2, Select_Operator;
+
+procedure TForm6.Button1Click(Sender: TObject);
+begin
+Select_Operator.SelectOperator.Show;
+{GroupBox1.Visible:=false;
+GroupBox2.Visible:=false;
+Label1.Visible:=False;
+Label2.Visible:=False;   }
+Form6.Hide;
+
+
+
+end;
+
+procedure TForm6.FormCreate(Sender: TObject);
+begin
+//Label2.Caption:=IntToSTR(Unit2.SUMofDATE);
+Form6.Button1.Font.Color:=rgb(214, 51, 95) ;
+{
+GroupBox1.Visible:=false;
+GroupBox2.Visible:=false;
+Label1.Visible:=False;
+Label2.Visible:=False;
+ }
+end;
+
+procedure TForm6.FormGesture(Sender: TObject;
+  const EventInfo: TGestureEventInfo; var Handled: Boolean);
+begin
+if EventInfo.GestureID=-1 then
+   // Form6.Caption:='Hello World';
+GroupBox1.Visible:=True;
+GroupBox2.Visible:=True;
+Label1.Visible:=True;
+Label2.Visible:=True;
+end;
+
+procedure TForm6.SpeedButton1Click(Sender: TObject);
+Var R:Word; // переменная, в которой хранится результат
+begin
+
+R:=MessageBox(Handle,PChar('Вы уверены, что хотите обнулить терминал?'),PChar('Внимание'),MB_ICONINFORMATION+MB_OKCANCEL+MB_DEFBUTTON2);
+
+
+
+if R=IDOK then // если нажата кнопка Yes
+   begin
+   AssignFile(F_sumOfDay, 'Sum.txt');
+  Rewrite(F_sumOfDay);
+  WriteLn(F_sumOfDay,'0');
+  CloseFile(F_sumOfDay);
+  SumofDate:=0;
+
+
+   end;
+if R=IDNO then // если нажата кнопка No
+   begin
+      // завершаем работу программы без сохранения
+   end;
+if R=IDCANCEL then // если нажата кнопка Cancel
+   begin
+      // продолжаем работу без сохранения
+   end;
+
+
+
+
+
+
+
+
+ Unit2.SUMofDATE:=0;
+end;
+
+end.

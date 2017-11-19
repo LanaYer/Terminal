@@ -1,0 +1,820 @@
+{*******************************************************}
+{                                                       }
+{           Модуль для работы с купюроприемником        }
+{            по протоколу CCNET                         }
+{                                                       }
+{           Автор : Гузенко А.В. Пермь                  }
+{            по все вопросам info@youfreedom.ru         }
+{                                                       }
+{*******************************************************}
+
+unit UCashCode;
+
+interface
+
+//коды ошибок диаазон от 100 до 199
+//100 - ошибка ком порта
+//101 - ошибка сброса устройства
+//102 - ошибки идентификации
+//103 - ошибки получения статуса
+//104 - ошибки установки списка принимаемых купюр
+//105 - ошибки установки секретности
+//106 - ошибки приема купюры
+//107 - ошибки возвртата купюры
+//108 - ошибки ASC
+//109 - ошибки NSC
+//110 - Ошибки опроса устройства
+
+//Коды информавцтонных сообщений диапазон от 200 до 299
+//201 - опрос
+//202 - NSC
+//203 - ASC
+//204 - сброс
+//205 - возврат
+//206 - установка принмаемых купюр
+//207 - особый режим приема
+//208 - укладка купюры
+//209 - идентификация
+//210 - статус устройства
+//211 - отправка ASC
+//212 - отправка NSC
+//213 - Включение питания после команд
+//214 - Инициализация
+//215 - Ожидание приема купюры
+//216 - Акцепт
+//217 - Недоступен, ожидаю инициализации
+//218 - Полная кассета
+//219 - Кассета отсутствует
+//220 - Замяло купюру
+//221 - Замяло касету
+//222 - КАРАУЛ !!!! ЖУЛИКИ !!!
+//223 - Сбой оборудования
+//224 - Stack_motor_falure
+//225 - Transport_speed_motor_falure
+//226 - Transport-motor_falure
+//227 - Aligning_motor_falure
+//228 - Initial_cassete_falure
+//229 - Optical_canal_falure
+//230 - Magnetical_canal_falure
+//231 - Capacitance_canal_falure
+//232 - Отказ от приема
+//233 - Insertion_error
+//234 - Dielectric_error
+//235 - Previously_inserted_bill_remains_in_head
+//236 - Compensation__factor_error
+//237 - Bill_transport_error
+//238 - Identification_error
+//239 - Verification_error
+//240 - Optic_sensor_error
+//241 - Return_by_inhibit_error
+//242 - Capacistance_error
+//243 - Operation_error
+//244 - Length_error
+//245 - Депонет
+//246 - Укладка
+//247 - Набрали нужную сумму
+//248 - Возврат купюры
+//249 - Завершаем работу по таймауту приема купюры
+
+
+const
+  POLYNOM = $08408;
+
+  //2 бит - 10 рублей
+  //3 бит - 50 рублей
+  //4 бит - 100 рублей
+  //5 бит - 500 рублей
+  //6 бит - 1000 рублей
+  //7 бит - 5000 рублей
+
+  B10   =   4;  //00000100
+  B50   =   8;  //00001000
+  B100  =   16; //00010000
+  B500  =   32; //00100000
+  B1000 =   64; //01000000
+  B5000 =   128;//10000000
+
+type
+
+  Tnominal = record
+    B10:Boolean;
+    B50:Boolean;
+    B100:Boolean;
+    B500:Boolean;
+    B1000:Boolean;
+    B5000:Boolean;
+  end;
+
+  TProcessMessage = procedure(Error:integer;Mess:string) of object;
+  TPollingBill    = procedure(Nominal:word;var CanLoop:boolean) of object;
+
+  TCashCodeBillValidatorCCNET = class(TObject)
+    constructor Create();
+    destructor Destroy(); override;
+  private
+    FComFile  : THandle;  // Указатель на com порт
+    FProcessMesage:TProcessMessage;
+    FPolingBill:TPollingBill;
+    FCanPollingLoop:Boolean; // Признак цикла опроса
+    FNamberComPort:Byte;
+    FComConnected:Boolean;
+    FCommand:Array[0..255] of Byte; //Команда
+    FLengthCommand:Byte;
+    FAnswer:Array[0..255] of Byte;  //Ответ
+    FLengthAnswer:Byte;
+    FData:Array[0..255] of Byte;    //Данные ответа
+    FLengthData:Byte;
+    procedure ProcessMessage(CodeMess:integer;Mess:string);
+    procedure PolingBill(Nominal:word;var CanLoop:boolean);
+    //Выполнение сформированной команды
+    procedure ProcessComand();
+    // Формирование команды
+    procedure SendPacket(Command:Byte;Data:Array of Byte);
+    //Разбор команды
+    procedure ParseAnswer();
+    // Очистка команды
+    procedure ClearCommand();
+    // Очистка ответа
+    procedure ClearAnswer();
+    // Очистка данных
+    procedure ClearData();
+  public
+    //Инициализация com порта
+    function OpenComPort:Boolean;
+    // Закрываем ком порт
+    procedure CloseComPort();
+
+    // Основные команды валидатора
+    function Reset():Boolean; // Сброс купюро-приемника
+    function Identification(var Name,Namber:string):Boolean;   //Номер и название купюроприемника
+    function GetStatus(var Nominal,Security:TNominal):Boolean; //Получение списка принимаемых купюр
+    function EnableBillTypes(Nominal:TNominal):Boolean;        //Установка прнимаемых купюр
+    function SetSecurity(Nominal:TNominal):Boolean;            //Установка повышенного контроля для определенных купюр
+    function Stack():Boolean;                                  //Принимаем купюру ESCROW режим
+    function Return():Boolean;                                 //Возврат купюры   ESCROW режим
+    function SendASC():Boolean;                                //Подтверждаем получение
+    function SendNSC():Boolean;                                //Не подтверждааем получение
+    function Poll():boolean;                                   //Опрос устройства
+    function PollingLoop(Sum:word;TimeLoop:LongWord):Word;
+
+    // Свойство для установки номера ком порта
+    property NamberComPort:Byte read FNamberComPort write FNamberComPort;
+    // Событие при любых сообщениях
+    property OnProcessMessage:TProcessMessage read FProcessMesage write FProcessMesage;
+    // Признак установки соединения с ком портом
+    property ComConnected:Boolean read FComConnected;
+    // Событие возникающее при приеме купюры, через переменную CanLoop можем прервать работу
+    property OnPolingBill:TPollingBill read FPolingBill write FPolingBill;
+    // Свойство проверяющее/устанавливающее цикл опроса
+    property CanPollingLoop:Boolean read FCanPollingLoop write FCanPollingLoop;
+  end;
+
+function GetCRC16(InData: array of byte; DataLng: word): word;
+
+// Проверка заданного бита на 1
+function IsBitSet(Value: Byte; BitNum : byte): boolean;
+
+// Установка заданного бита в 1
+function BitOn(const val: Byte; const TheBit: byte): Byte;
+
+// Установка заданного бита в 0
+function BitOff(const val: Byte; const TheBit: byte): Byte;
+
+implementation
+
+{ TCashCodeBillValiddator }
+
+Uses SysUtils,Windows,DateUtils;
+
+procedure TCashCodeBillValidatorCCNET.ClearAnswer;
+begin
+  FillChar(FAnswer, SizeOf(FAnswer),0);
+  FLengthAnswer:=0;
+end;
+
+procedure TCashCodeBillValidatorCCNET.ClearCommand;
+begin
+  FillChar(FCommand, SizeOf(FCommand),0);
+  FLengthCommand:=0;
+end;
+
+procedure TCashCodeBillValidatorCCNET.ClearData;
+begin
+  FillChar(FData, SizeOf(FData),0);
+  FLengthData:=0;
+end;
+
+procedure TCashCodeBillValidatorCCNET.CloseComPort();
+begin
+  if FComFile <> INVALID_HANDLE_VALUE
+  then CloseHandle(FComFile);
+  FComFile := INVALID_HANDLE_VALUE;
+  FComConnected:=false;
+end;
+
+constructor TCashCodeBillValidatorCCNET.Create;
+begin
+  inherited;
+end;
+
+destructor TCashCodeBillValidatorCCNET.Destroy;
+begin
+  inherited;
+  CloseComPort;
+end;
+
+function TCashCodeBillValidatorCCNET.OpenComPort: Boolean;
+const
+  RxBufferSize = 256;
+  TxBufferSize = 256;
+var
+  DeviceName: array[0..80] of Char;
+  DCB: TDCB;
+  CommTimeouts: TCommTimeouts;
+begin
+  try
+    result:=true; // Надемся на лучшее
+    FComConnected:=True;
+
+    if FNamberComPort = 0
+    then raise Exception.Create('Не задан номер COM порта');
+
+    StrPCopy(DeviceName, 'Com'+IntToStr(FNamberComPort)+':');
+    FComFile := CreateFile(DeviceName, GENERIC_READ or GENERIC_WRITE, 0, nil, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+
+    if FComFile = INVALID_HANDLE_VALUE
+    then raise Exception.Create('Не удалось открыть COM порт');
+
+    if not SetupComm(FComFile, RxBufferSize, TxBufferSize)
+    then raise Exception.Create('Не удалось задать буфер COM порта');
+
+    if not GetCommState(FComFile, DCB)
+    then raise Exception.Create('Не удалось прочитать параметры COM порта');
+
+    // Задаем параемтры порта
+    DCB.BaudRate:=9600;
+    DCB.ByteSize:=8;
+    DCB.Parity:=noparity;
+    DCB.StopBits:=ONESTOPBIT;
+    DCB.Flags:=DTR_CONTROL_ENABLE;
+
+    if not SetCommState(FComFile, DCB)
+    then raise Exception.Create('Не удалось установить параметры COM порта');
+
+    CommTimeouts.ReadIntervalTimeout         := 400;
+    CommTimeouts.ReadTotalTimeoutMultiplier  := 0;
+    CommTimeouts.ReadTotalTimeoutConstant    := 400;
+    CommTimeouts.WriteTotalTimeoutMultiplier := 0;
+    CommTimeouts.WriteTotalTimeoutConstant   := 400;
+
+    if not SetCommTimeouts(FComFile, CommTimeouts)
+    then raise Exception.Create('Не удалось установить таймауты COM порта');
+
+  except
+    on E:Exception do
+    begin
+      result:=False;
+      FComConnected:=False;
+      ProcessMessage(100,E.Message);
+    end;
+  end;
+end;
+
+procedure TCashCodeBillValidatorCCNET.ParseAnswer;
+var
+  CRC16:array[0..1] of Byte;
+  CRCWord:Word;
+begin
+  ClearData();
+  if FLengthAnswer >= 6 then // Минимальный ответ 6 символов все что меньше не полный данные
+  begin
+    CRCWord:=GetCRC16(FAnswer,FLengthAnswer-2);   // Получим CRC ответа
+    CopyMemory(@CRC16,@CRCWord,2);
+    if (CRC16[0] = FAnswer[FLengthAnswer-2]) and (CRC16[1] = FAnswer[FLengthAnswer-1])
+    //ответ полный и CRC верный а значит 100 % что данные верны, положим их в дату
+    then
+      begin
+        // 5 это 1 байт синхронизации, 1 байт адресс девайса, 1 байт - длина данных, 2 байт - CRC
+        CopyMemory(@FData,@FAnswer[3],FLengthAnswer-5);
+        FLengthData:=FLengthAnswer-5;
+      end
+    else raise Exception.Create('Не верный CRC ответа.');
+  end
+  else raise Exception.Create('Не полный ответ');
+end;
+
+procedure TCashCodeBillValidatorCCNET.PolingBill(Nominal: word;
+  var CanLoop: boolean);
+begin
+  if Assigned(FPolingBill) then FPolingBill(Nominal, CanLoop);
+end;
+
+function TCashCodeBillValidatorCCNET.Poll: boolean;
+begin
+  try
+   if not FComConnected then raise Exception.Create('COM порт закрыт, выполнение команды RESET не возможно');
+   SendPacket($33,[]);
+   ProcessMessage(201,'->POLL');
+   ProcessComand();
+   result:=true;
+  except
+    on E:Exception do
+    begin
+      ProcessMessage(110,E.Message);
+      result:=false;
+    end;
+  end;
+end;
+
+function TCashCodeBillValidatorCCNET.PollingLoop(Sum: word;
+  TimeLoop: LongWord): Word;
+var
+  StartTime:TDateTime;
+  FirsByte,SEcondByte:Byte;
+  BillNominal:word;
+begin
+  result:= 0;
+  StartTime:=Now(); // Получаем текущее время
+  FCanPollingLoop:=true;
+  while FCanPollingLoop do
+  begin
+    if Poll() then  // Если опрос прошел успешно
+    begin
+      FirsByte  :=FData[0];
+      SEcondByte:=FData[1];
+
+      case FirsByte of
+        $10,$11,$12 : begin
+                        ProcessMessage(213,'Включение питания после команд');
+                        FCanPollingLoop:=false;
+                      end;
+        $13:begin
+              ProcessMessage(214,'Инициализация');
+            end;
+        $14:begin
+              ProcessMessage(215,'Ожидание приема купюры');
+            end;
+        $15:begin
+              ProcessMessage(216,'Акцепт');
+            end;
+        $19:begin
+              ProcessMessage(217,'Недоступен, ожидаю инициализации');
+            end;
+        $41:begin
+              ProcessMessage(218,'Полная кассета');
+              Reset();
+              FCanPollingLoop:=false;
+            end;
+        $42:begin
+              ProcessMessage(219,'Кассета отсутствует');
+              Reset();
+              FCanPollingLoop:=false;
+            end;
+        $43:begin
+              ProcessMessage(220,'Замяло купюру');
+              Reset();
+              FCanPollingLoop:=false;
+            end;
+        $44:begin
+              ProcessMessage(221,'Замяло касету 0_o');
+              Reset();
+              FCanPollingLoop:=false;
+            end;
+        $45:begin
+              ProcessMessage(222,'КАРАУЛ !!!! ЖУЛИКИ !!!');
+              Reset();
+              FCanPollingLoop:=false;
+            end;
+        $47:begin
+              ProcessMessage(223,'Сбой оборудования');
+              case SEcondByte of
+                $50:ProcessMessage(224,'Stack_motor_falure');
+                $51:ProcessMessage(225,'Transport_speed_motor_falure');
+                $52:ProcessMessage(226,'Transport-motor_falure');
+                $53:ProcessMessage(227,'Aligning_motor_falure');
+                $54:ProcessMessage(228,'Initial_cassete_falure');
+                $55:ProcessMessage(229,'Optical_canal_falure');
+                $56:ProcessMessage(230,'Magnetical_canal_falure');
+                $5F:ProcessMessage(231,'Capacitance_canal_falure');
+              end;
+            end;
+        $1C:begin
+              ProcessMessage(232,'Отказ от приема');
+              case SEcondByte of
+                $60:ProcessMessage(233,'Insertion_error');
+                $61:ProcessMessage(234,'Dielectric_error');
+                $62:ProcessMessage(235,'Previously_inserted_bill_remains_in_head');
+                $63:ProcessMessage(236,'Compensation__factor_error');
+                $64:ProcessMessage(237,'Bill_transport_error');
+                $65:ProcessMessage(238,'Identification_error');
+                $66:ProcessMessage(239,'Verification_error');
+                $67:ProcessMessage(240,'Optic_sensor_error');
+                $68:ProcessMessage(241,'Return_by_inhibit_error');
+                $69:ProcessMessage(242,'Capacistance_error');
+                $6A:ProcessMessage(243,'Operation_error');
+                $6C:ProcessMessage(244,'Length_error');
+              end;
+            end;
+        $80:begin
+              ProcessMessage(245,'Депонет'); // Дорабатывать не стал, так как не вижу практического применения, в общем кому надо тот допили
+            end;
+        $81:begin
+              ProcessMessage(246,'Укладка');
+              case SEcondByte of
+                2:BillNominal:=10;
+                3:BillNominal:=50;
+                4:BillNominal:=100;
+                5:BillNominal:=500;
+                6:BillNominal:=1000;
+                7:BillNominal:=5000;
+              end;
+              StartTime:=Now(); // Сбросим время до ожидания следующей купюры
+                   SendASC();
+              result:=result+BillNominal;
+              PolingBill(BillNominal,FCanPollingLoop);
+              if result>=Sum then
+              begin
+                FCanPollingLoop:=False;  //Сумма набралась, заканчиваем клянчить
+                ProcessMessage(247,'Набрали нужную сумму');
+              end;
+            end;
+        $82:begin
+              ProcessMessage(248,'Возврат купюры');
+            end;
+      end;
+      Sleep(100);
+    end;
+
+    if SecondsBetween(Now(),StartTime)> TimeLoop then
+    begin
+      FCanPollingLoop:=false;
+      ProcessMessage(249,'Завершаем работу по таймауту приема купюры');
+    end;
+  end;
+end;
+
+procedure TCashCodeBillValidatorCCNET.ProcessComand;
+var
+  BytesWritten:Dword;
+  BytesRead:Dword;
+  Errs:Dword;
+  ComStat:TComStat;   //состояние порта
+begin
+  //Пишем команду
+  ClearCommError(FComFile,Errs,@ComStat);       //считываем состояние порта
+  if ComStat.cbInQue > 0 then  //В порту чтото болтается , попытаемся очистить
+  begin
+    if not PurgeComm(FComFile, PURGE_TXCLEAR or PURGE_RXCLEAR) then
+    raise Exception.Create('Не удалось очистить порт');
+  end;
+
+  if not WriteFile(FComFile, FCommand, FLengthCommand, BytesWritten, nil)
+  then Exception.Create('Не удалось записать команду в порт');
+
+  if BytesWritten <> FLengthCommand
+  then Exception.Create('Не удалось записать команду в порт до конца');
+
+  //Читаем ответ
+  if not ClearCommError(FComFile,Errs,@ComStat)
+  then Exception.Create('Не удалось сбросить ошибки COM порта'); //считываем состояние порта
+
+  ClearAnswer();
+  if not ReadFile(FComFile, FAnswer, SizeOf(FAnswer), BytesRead, nil)
+  then Exception.Create('Не удалось прочитать ответ из порта')
+  else
+    begin
+      FLengthAnswer:=BytesRead;
+      ParseAnswer();
+    end;
+end;
+
+procedure TCashCodeBillValidatorCCNET.ProcessMessage(CodeMess: integer; Mess: string);
+begin
+  if Assigned(FProcessMesage) then FProcessMesage(CodeMess, Mess);
+end;
+
+function TCashCodeBillValidatorCCNET.Reset():Boolean;
+begin
+  try
+   if not FComConnected then raise Exception.Create('COM порт закрыт, выполнение команды RESET не возможно');
+   SendPacket($30,[]);
+   ProcessMessage(204,'->RESET');
+   ProcessComand();
+
+   if FData[0] = $FF then
+   begin
+     ProcessMessage(202,'<-NSC');
+     raise Exception.Create('Получен отрицательный ответ (NAK)')
+   end;
+
+   if FData[0] = $00
+   then ProcessMessage(203,'<-ASC');
+
+   result:=true;
+  except
+    on E:Exception do
+    begin
+      ProcessMessage(101,E.Message);
+      result:=false;
+    end;
+  end;
+end;
+
+function TCashCodeBillValidatorCCNET.Return: Boolean;
+begin
+  try
+   if not FComConnected then raise Exception.Create('COM порт закрыт, выполнение команды RESET не возможно');
+   SendPacket($36,[]);
+   ProcessMessage(205,'->RETURN');
+   ProcessComand();
+   result:=true;
+  except
+    on E:Exception do
+    begin
+      ProcessMessage(107,E.Message);
+      result:=false;
+    end;
+  end;
+end;
+
+function TCashCodeBillValidatorCCNET.EnableBillTypes(
+  Nominal: TNominal): Boolean;
+var
+  BillTypesByte:Byte;
+begin
+  try
+   if not FComConnected then raise Exception.Create('COM порт закрыт, выполнение команды RESET не возможно');
+
+   BillTypesByte:=0;
+
+   // Установим биты купюр
+   if Nominal.B10 then BillTypesByte:=BillTypesByte+B10;
+   if Nominal.B50 then BillTypesByte:=BillTypesByte+B50;
+   if Nominal.B100 then BillTypesByte:=BillTypesByte+B100;
+   if Nominal.B500 then BillTypesByte:=BillTypesByte+B500;
+   if Nominal.B1000 then BillTypesByte:=BillTypesByte+B1000;
+   if Nominal.B5000 then BillTypesByte:=BillTypesByte+B5000;
+
+   //Рубли хранятся в третьем байте
+
+   SendPacket($34,[0,0,BillTypesByte,0,0,0]);
+   ProcessMessage(206,'->ENABLE BILL TYPES');
+   ProcessComand();
+
+   if FData[0] = $FF then
+   begin
+     ProcessMessage(202,'<-NSC');
+     raise Exception.Create('Получен отрицательный ответ (NAK)')
+   end;
+
+   if FData[0] = $00
+   then ProcessMessage(203,'<-ASC');
+
+   result:=true;
+  except
+    on E:Exception do
+    begin
+      ProcessMessage(104,E.Message);
+      result:=false;
+    end;
+  end;
+end;
+
+function TCashCodeBillValidatorCCNET.SetSecurity(Nominal: TNominal): Boolean;
+var
+  BillTypesByte:Byte;
+begin
+  try
+   if not FComConnected then raise Exception.Create('COM порт закрыт, выполнение команды RESET не возможно');
+
+   BillTypesByte:=0;
+
+   // Установим биты купюр
+   if Nominal.B10 then BillTypesByte:=BillTypesByte+B10;
+   if Nominal.B50 then BillTypesByte:=BillTypesByte+B50;
+   if Nominal.B100 then BillTypesByte:=BillTypesByte+B100;
+   if Nominal.B500 then BillTypesByte:=BillTypesByte+B500;
+   if Nominal.B1000 then BillTypesByte:=BillTypesByte+B1000;
+   if Nominal.B5000 then BillTypesByte:=BillTypesByte+B5000;
+
+   //Рубли хранятся в третьем байте
+
+   SendPacket($32,[0,0,BillTypesByte]);
+   ProcessMessage(207,'->SET SECURITY');
+   ProcessComand();
+
+   if FData[0] = $FF then
+   begin
+     ProcessMessage(202,'<-NSC');
+     raise Exception.Create('Получен отрицательный ответ (NAK)')
+   end;
+
+   if FData[0] = $00
+   then ProcessMessage(203,'<-ASC');
+
+   result:=true;
+  except
+    on E:Exception do
+    begin
+      ProcessMessage(105,E.Message);
+      result:=false;
+    end;
+  end;
+end;
+
+function TCashCodeBillValidatorCCNET.Stack: Boolean;
+begin
+  try
+   if not FComConnected then raise Exception.Create('COM порт закрыт, выполнение команды RESET не возможно');
+   SendPacket($35,[]);
+   ProcessMessage(208,'->STACK');
+   ProcessComand();
+   result:=true;
+  except
+    on E:Exception do
+    begin
+      ProcessMessage(106,E.Message);
+      result:=false;
+    end;
+  end;
+end;
+
+function TCashCodeBillValidatorCCNET.Identification(var Name,Namber:string):Boolean;
+var
+  i:integer;
+begin
+  try
+   if not FComConnected then raise Exception.Create('COM порт закрыт, выполнение команды RESET не возможно');
+   SendPacket($37,[]);
+   ProcessComand();
+   ProcessMessage(209,'->IDENTIFICATION');
+   //Вытащим наше значение из ответа
+   //15 байт - название
+   //12 байт - серийный номер
+   for I := 0 to FLengthData - 1 do
+   begin
+     if (I>=0) and (i<15) then Name:=Name+Chr(FData[I]);
+     if (I>=15) and (i<27) then Namber:=Namber+Chr(FData[I]);
+   end;
+   result:=true;
+  except
+    on E:Exception do
+    begin
+      ProcessMessage(102,E.Message);
+      result:=false;
+    end;
+  end;
+end;
+
+function TCashCodeBillValidatorCCNET.GetStatus(var Nominal,Security: Tnominal): Boolean;
+begin
+  try
+   if not FComConnected then raise Exception.Create('COM порт закрыт, выполнение команды RESET не возможно');
+   SendPacket($31,[]);
+   ProcessComand();
+   ProcessMessage(210,'->GET STATUS');
+   // Заполним список принимаемых купюр
+   // Рубли хранятся в третьем байте в следующем порядке
+   //2 бит - 10 рублей
+   //3 бит - 50 рублей
+   //4 бит - 100 рублей
+   //5 бит - 500 рублей
+   //6 бит - 1000 рублей
+   //7 бит - 5000 рублей
+
+   Nominal.B10 := IsBitSet(FData[2],2);
+   Nominal.B50 := IsBitSet(FData[2],3);
+   Nominal.B100 := IsBitSet(FData[2],4);
+   Nominal.B500 := IsBitSet(FData[2],5);
+   Nominal.B1000 := IsBitSet(FData[2],6);
+   Nominal.B5000 := IsBitSet(FData[2],7);
+
+   // Заполним список купюр с повышенным контролем при приеме
+   // Рубли хранятся в шестом байте в следующем порядке
+   //2 бит - 10 рублей
+   //3 бит - 50 рублей
+   //4 бит - 100 рублей
+   //5 бит - 500 рублей
+   //6 бит - 1000 рублей
+   //7 бит - 5000 рублей
+
+   Security.B10 := IsBitSet(FData[5],2);
+   Security.B50 := IsBitSet(FData[5],3);
+   Security.B100 := IsBitSet(FData[5],4);
+   Security.B500 := IsBitSet(FData[5],5);
+   Security.B1000 := IsBitSet(FData[5],6);
+   Security.B5000 := IsBitSet(FData[5],7);
+
+   result:=true;
+  except
+    on E:Exception do
+    begin
+      ProcessMessage(103,E.Message);
+      result:=false;
+    end;
+  end;
+end;
+
+function TCashCodeBillValidatorCCNET.SendASC: Boolean;
+begin
+  try
+   if not FComConnected then raise Exception.Create('COM порт закрыт, выполнение команды RESET не возможно');
+   SendPacket(0,[]);
+   ProcessMessage(211,'->ASC');
+   try
+     ProcessComand();
+   except
+   end;
+   result:=true;
+  except
+    on E:Exception do
+    begin
+      ProcessMessage(108,E.Message);
+      result:=false;
+    end;
+  end;
+end;
+
+function TCashCodeBillValidatorCCNET.SendNSC: Boolean;
+begin
+  try
+   if not FComConnected then raise Exception.Create('COM порт закрыт, выполнение команды RESET не возможно');
+   SendPacket($FF,[]);
+   ProcessMessage(212,'->NSC');
+   try
+     ProcessComand();
+   except
+   end;
+
+   result:=true;
+  except
+    on E:Exception do
+    begin
+      ProcessMessage(109,E.Message);
+      result:=false;
+    end;
+  end;
+end;
+
+procedure TCashCodeBillValidatorCCNET.SendPacket(Command: Byte; Data: array of Byte);
+var
+  CRC16:array[0..1] of Byte;
+  CRCWord:Word;
+begin
+  ClearCommand();
+
+  FLengthCommand:=6+Length(Data);
+
+  FCommand[0] := $02; // Синхронизационный байт
+  FCommand[1] := $03; // Адресс валидатора
+  FCommand[2] := FLengthCommand; //Длина всего пакета включая CRC
+  FCommand[3] := Command;   // Команда
+
+  if Length(Data) <> 0 // Если есть данные для пеердачи
+  then CopyMemory(@FCommand[4],@Data,Length(Data)); // Скопируем их все начиная с 5 байта
+
+  CRCWord:=GetCRC16(FCommand,FLengthCommand-2);   // Получим CRC
+  CopyMemory(@CRC16,@CRCWord,2);             // Разабьем CRC на байты
+
+  FCommand[FLengthCommand-2]:=CRC16[0];           // Подпишем нашу команду
+  FCommand[FLengthCommand-1]:=CRC16[1];
+end;
+
+function GetCRC16(InData: array of byte; DataLng: word): word;
+var
+  i,TmpCRC: word;
+  j: byte;
+begin
+  result:=0;
+  for i:=0 to (DataLng-1) do
+  begin
+    TmpCRC:=result xor InData[i];
+    for j:=0 to 7 do
+    begin
+      if (TmpCRC and $0001)<>0 then
+      begin
+        TmpCRC:=TmpCRC shr 1;
+        TmpCRC:=TmpCRC xor POLYNOM;
+      end
+      else TmpCRC:=TmpCRC shr 1;
+    end;
+    result:=TmpCRC;
+  end;
+end;
+
+function IsBitSet(Value: Byte; BitNum : byte): boolean;
+begin
+  result:=((Value shr BitNum) and 1) = 1
+end;
+
+function BitOn(const val: Byte; const TheBit: byte): Byte;
+begin
+  Result := val or (1 shl TheBit);
+end;
+
+function BitOff(const val: Byte; const TheBit: byte): Byte;
+begin
+  Result := val and ((1 shl TheBit) xor $FF);
+end;
+
+end.

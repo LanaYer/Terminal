@@ -1,0 +1,53 @@
+object Form5: TForm5
+  Left = 0
+  Top = 0
+  BorderIcons = []
+  BorderStyle = bsNone
+  Caption = 'Form5'
+  ClientHeight = 1300
+  ClientWidth = 1300
+  Color = clWhite
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsStayOnTop
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object SpeedButton1: TSpeedButton
+    Left = 391
+    Top = 504
+    Width = 257
+    Height = 81
+    Caption = #1053#1072' '#1075#1083#1072#1074#1085#1091#1102
+    OnClick = SpeedButton1Click
+  end
+  object Label1: TLabel
+    Left = 391
+    Top = 72
+    Width = 226
+    Height = 19
+    Caption = #1057#1087#1072#1089#1080#1073#1086', '#1095#1090#1086' '#1074#1099#1073#1088#1072#1083#1080' '#1053#1072#1089'!'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 104
+    Top = 152
+    Width = 663
+    Height = 25
+    Caption = #1057#1086#1093#1088#1072#1085#1103#1081#1090#1077' '#1089#1074#1086#1081' '#1095#1077#1082', '#1087#1086#1082#1072' '#1085#1077' '#1091#1073#1077#1076#1080#1090#1077#1089#1100' '#1074' '#1087#1088#1086#1093#1086#1078#1076#1083#1077#1085#1080#1080' '#1086#1087#1077#1088#1072#1094#1080#1080
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+end

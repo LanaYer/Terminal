@@ -1,0 +1,54 @@
+unit Unit3;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DB, IBDatabase, Grids, DBGrids, IBCustomDataSet, IBTable, StdCtrls,
+  IBQuery, DBCtrls;
+
+type
+  TForm3 = class(TForm)
+    IBDatabase1: TIBDatabase;
+    IBTable1: TIBTable;
+    DataSource1: TDataSource;
+    IBTransaction1: TIBTransaction;
+    Label1: TLabel;
+    Label3: TLabel;
+    Label5: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    IBQuery1: TIBQuery;
+    IBTransaction2: TIBTransaction;
+    DBText1: TDBText;
+    DBText2: TDBText;
+    DBText3: TDBText;
+    DBText4: TDBText;
+    DBText5: TDBText;
+    DBText6: TDBText;
+    DBText7: TDBText;
+    DBText8: TDBText;
+    IBQuery2: TIBQuery;
+    DataSource2: TDataSource;
+    Label2: TLabel;
+    Label12: TLabel;
+    Label4: TLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form3: TForm3;
+  OperatorCode: Integer;
+  OperatorName: String;
+  BillName: String;
+  Sum: Integer;
+
+implementation
+
+{$R *.dfm}
+
+end.

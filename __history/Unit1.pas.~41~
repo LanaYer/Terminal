@@ -1,0 +1,205 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Select_Operator, Unit2, Buttons, pngimage, ExtCtrls;
+
+type
+  TForm1 = class(TForm)
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    SpeedButton3: TSpeedButton;
+    SpeedButton4: TSpeedButton;
+    SpeedButton5: TSpeedButton;
+    SpeedButton6: TSpeedButton;
+    SpeedButton7: TSpeedButton;
+    SpeedButton8: TSpeedButton;
+    SpeedButton9: TSpeedButton;
+    SpeedButton10: TSpeedButton;
+    SpeedButton11: TSpeedButton;
+    SpeedButton12: TSpeedButton;
+    Label3: TLabel;
+    Label4: TLabel;
+    SpeedButton14: TSpeedButton;
+    Label5: TLabel;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Label1: TLabel;
+    procedure Button1Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButton13Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
+    procedure SpeedButton4Click(Sender: TObject);
+    procedure SpeedButton5Click(Sender: TObject);
+    procedure SpeedButton6Click(Sender: TObject);
+    procedure SpeedButton7Click(Sender: TObject);
+    procedure SpeedButton8Click(Sender: TObject);
+    procedure SpeedButton9Click(Sender: TObject);
+    procedure SpeedButton10Click(Sender: TObject);
+    procedure SpeedButton11Click(Sender: TObject);
+    procedure SpeedButton12Click(Sender: TObject);
+    procedure SpeedButton14Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  OperatorCode: integer;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+if (edit1.Text='555') then
+ShowMessage('gg');
+end;
+
+procedure TForm1.SpeedButton10Click(Sender: TObject);
+begin
+If(length(Edit1.Text)<10)then
+Edit1.Text := Edit1.Text + '9';
+end;
+
+procedure TForm1.SpeedButton11Click(Sender: TObject);
+begin
+If(length(Edit1.Text)<10)then
+Edit1.Text := Edit1.Text + '0';
+end;
+
+procedure TForm1.SpeedButton12Click(Sender: TObject);
+var
+s: String;
+begin
+
+s :=  Edit1.Text;
+delete(s,Length(s),1);
+          Edit1.Text:= s;
+
+end;
+
+procedure TForm1.SpeedButton13Click(Sender: TObject);
+begin
+  Select_Operator.SelectOperator.Show;
+  Form1.Hide;
+end;
+
+procedure TForm1.SpeedButton14Click(Sender: TObject);
+begin
+  Select_Operator.SelectOperator.Show;
+  Form1.Hide;
+  Edit1.Text := '0';
+end;
+
+procedure TForm1.SpeedButton1Click(Sender: TObject);
+begin
+
+if (Edit2.Text='Life:)') then
+begin
+ShowMessage('life');
+
+Unit2.Form2.Show;
+Form1.Hide;
+
+Unit2.Form2.Label2.Caption :=  Edit1.Text;
+Unit2.Form2.Label3.Caption :=  Edit2.Text;
+Unit2.OperatorCode :=  OperatorCode;
+Unit2.PrevForm  := 1;
+end;
+
+if (Edit2.Text='МТС (Украина)') then
+begin
+ShowMessage('Mts');
+
+Unit2.Form2.Show;
+Form1.Hide;
+
+Unit2.Form2.Label2.Caption :=  Edit1.Text;
+Unit2.Form2.Label3.Caption :=  Edit2.Text;
+Unit2.OperatorCode :=  OperatorCode;
+Unit2.PrevForm  := 1;
+end;
+
+if ((Edit2.Text<>'МТС (Украина)')and(Edit2.Text<>'Life:)')) then
+begin
+
+If(length(Edit1.Text)<10)then
+   Label1.Visible:=True
+
+   else Begin
+Unit2.Form2.Show;
+Form1.Hide;
+
+Unit2.Form2.Label2.Caption :=  Edit1.Text;
+Unit2.Form2.Label3.Caption :=  Edit2.Text;
+Unit2.OperatorCode :=  OperatorCode;
+Unit2.PrevForm  := 1;
+end;
+end;
+
+end;
+
+procedure TForm1.SpeedButton2Click(Sender: TObject);
+begin
+  If(length(Edit1.Text)<10)then
+  //Label1.Caption := Label1.Caption + '1';
+  Edit1.Text :=  Edit1.Text+ '1';
+end;
+
+procedure TForm1.SpeedButton3Click(Sender: TObject);
+begin
+If(length(Edit1.Text)<10)then
+ //Label1.Caption := Label1.Caption + '2';
+ Edit1.Text :=  Edit1.Text+ '2';
+end;
+
+procedure TForm1.SpeedButton4Click(Sender: TObject);
+begin
+If(length(Edit1.Text)<10)then
+ //Label1.Caption := Label1.Caption + '3';
+ Edit1.Text :=  Edit1.Text+ '3';
+end;
+
+procedure TForm1.SpeedButton5Click(Sender: TObject);
+begin
+If(length(Edit1.Text)<10)then
+//Label1.Caption := Label1.Caption + '4';
+Edit1.Text :=  Edit1.Text+ '4';
+end;
+
+procedure TForm1.SpeedButton6Click(Sender: TObject);
+begin
+If(length(Edit1.Text)<10)then
+//Label1.Caption := Label1.Caption + '5';
+Edit1.Text :=  Edit1.Text+ '5';
+end;
+
+procedure TForm1.SpeedButton7Click(Sender: TObject);
+begin
+If(length(Edit1.Text)<10)then
+//Label1.Caption := Label1.Caption + '6';
+Edit1.Text :=  Edit1.Text+ '6';
+end;
+
+procedure TForm1.SpeedButton8Click(Sender: TObject);
+begin
+If(length(Edit1.Text)<10)then
+//Label1.Caption := Label1.Caption + '7';
+Edit1.Text :=  Edit1.Text+ '7';
+end;
+
+procedure TForm1.SpeedButton9Click(Sender: TObject);
+begin
+If(length(Edit1.Text)<10)then
+//Label1.Caption := Label1.Caption + '8';
+Edit1.Text :=  Edit1.Text+ '8';
+end;
+
+end.

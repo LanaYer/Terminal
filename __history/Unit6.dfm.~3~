@@ -1,0 +1,141 @@
+object Form6: TForm6
+  Left = 0
+  Top = 0
+  Caption = 'Form6'
+  ClientHeight = 1002
+  ClientWidth = 1280
+  Color = clWhite
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsStayOnTop
+  OldCreateOrder = False
+  Touch.GestureManager = GestureManager1
+  OnCreate = FormCreate
+  OnGesture = FormGesture
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 328
+    Top = 96
+    Width = 256
+    Height = 23
+    Caption = #1058#1077#1082#1091#1097#1072#1103' '#1089#1091#1084#1084#1072' '#1074' '#1090#1077#1088#1084#1080#1085#1072#1083#1077':'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 608
+    Top = 96
+    Width = 6
+    Height = 23
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object GroupBox1: TGroupBox
+    Left = 0
+    Top = -8
+    Width = 1289
+    Height = 65
+    Caption = 'GroupBox1'
+    Color = clBlack
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object Button1: TButton
+      Left = 1096
+      Top = 20
+      Width = 129
+      Height = 38
+      Caption = #1042#1099#1093#1086#1076
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 0
+      OnClick = Button1Click
+    end
+  end
+  object GroupBox2: TGroupBox
+    Left = 0
+    Top = 56
+    Width = 217
+    Height = 945
+    Color = clBtnShadow
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 1
+    object SpeedButton1: TSpeedButton
+      Left = 3
+      Top = 40
+      Width = 214
+      Height = 49
+      Caption = #1054#1073#1085#1091#1083#1080#1090#1100' '#1076#1077#1085#1100#1075#1080' '#1074' '#1058#1077#1088#1084#1080#1085#1072#1083#1077
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      OnClick = SpeedButton1Click
+    end
+  end
+  object GestureManager1: TGestureManager
+    Left = 248
+    Top = 64
+    CustomGestures = <
+      item
+        Deviation = 44
+        ErrorMargin = 76
+        GestureID = -1
+        Name = 'MyGesture'
+        Options = 9
+        Points = {
+          01C40000000000010003000100070001000C00010011000100160001001B0001
+          0020000100250001002A00010030000100350001003A0001003F000100440001
+          00490001004E00010053000100590001005E0001006300010065000100680001
+          006E00010073000100780001007D00010083000100880001008D000100920001
+          00980001009D000100A2000100A7000100AD000100B2000100B7000100BC0001
+          00C1000100C6000100CB000100D0000100D6000100DB000100E0000100E50001
+          00EA000100EF000100F4000100F9000100FF00010004010100090101000E0101
+          0013010100180101001D01010022010100280101002D010100320101003C0101
+          0041010100460101004B010000500101004C0104004701080043010C003F010F
+          0039011300330118002E011C0028012000230125001E01290019012D00140131
+          000F0136000A01390005013D00FF004200FA004600F5004A00F0004E00EB0052
+          00E7005600E1005A00DC005E00D7006200D2006700CC006B00C7006F00C20073
+          00BD007700B8007B00B3007F00AE008300A9008800A3008C009E009000990094
+          00940099008F009D008900A2008300A6007F00A9007B00AC007500B0007000B4
+          006B00B8006700BC006200BF005E00C3005A00C6005600CA005000CE004B00D2
+          004600D6004100DA003C00DE003700E2003200E6002D00EB002700EF002200F3
+          001D00F7001800FC00130000010E0004010900080104000C0109000C010E000C
+          0113000C0118000C011D000C0122000C0127000C012D000C0132000C0137000C
+          013C000C0142000C0147000C014C000C0151000C0157000C015C000C0161000C
+          0166000C016B000C0170000C0175000C017A000C0180000C0185000C018A000C
+          018F000C0195000C019D000C01A4000C01AA000C01AF000C01B4000C01B9000C
+          01BE000C01C3000C01C8000C01CF000C01D7000C01DD000C01E2000C01E8000C
+          01ED000C01F2000C01F7000C01FD000C0102010C0107010C010C010C0111010C
+          0116010C011B010C0120010C0126010C012B010C0130010C0135010C013B010C
+          0140010C0145010C014A010C014D010C0150010C01}
+      end>
+    GestureData = <
+      item
+        Control = Owner
+        Collection = <
+          item
+            GestureID = -1
+          end>
+      end>
+  end
+end
